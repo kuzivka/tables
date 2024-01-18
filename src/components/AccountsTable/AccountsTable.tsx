@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Table } from '../../elements/Table/Table';
 
 interface IAccount {
   accountId: number;
@@ -27,28 +28,6 @@ export const AccountsTable: FC = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Accounts Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Account ID</th>
-            <th>Email</th>
-            <th>Auth Token</th>
-            <th>Creation Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accountList.map(({ accountId, email, authToken, creationDate }) => (
-            <tr key={accountId} onClick={() => handleClick(accountId)}>
-              <td>{accountId}</td>
-              <td>{email}</td>
-              <td>{authToken}</td>
-              <td>{creationDate}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Table tableName="ACCOUNTS" list={accountList} handleClick={handleClick} />
   );
 };

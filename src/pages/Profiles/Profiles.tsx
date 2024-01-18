@@ -1,5 +1,11 @@
 import { ProfilesTable } from '../../components/ProfilesTable/ProfilesTable';
+import { GoBackBtn } from '../../elements/GoBackBtn/GoBackBtn';
 
 export const Profiles = () => {
-  return <ProfilesTable />;
+  return (
+    <>
+      <GoBackBtn />
+      <ProfilesTable />
+    </>
+  );
 };

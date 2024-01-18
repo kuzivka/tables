@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Table } from '../../elements/Table/Table';
 
 interface IProfile {
   profileId: number;
@@ -15,8 +16,7 @@ export const ProfilesTable: FC = () => {
   const navigate = useNavigate();
 
   const handleClick = (id: number) => {
-    navigate('/');
-    console.log('click');
+    navigate(`/campaign/${id}`, { state: { id } });
   };
 
   useEffect(() => {
@@ -33,26 +33,11 @@ export const ProfilesTable: FC = () => {
 
   return (
     <div>
-      <h2>Accounts Table</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Profile ID</th>
-            <th>Country</th>
-            <th>Marketplace</th>
-          </tr>
-        </thead>
-        <tbody>
-          {profileList.map(({ profileId, marketplace, country }) => (
-            <tr key={profileId} onClick={() => handleClick(profileId)}>
-              <td>{profileId}</td>
-              <td>{country}</td>
-              <td>{marketplace}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
+      <Table
+        tableName="PROFILES"
+        list={profileList}
+        handleClick={handleClick}
+      />
     </div>
   );
 };
