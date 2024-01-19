@@ -1,0 +1,10 @@
+@use '../../assets/style/mixins.scss' as *;
+
+.campaigns-page {
+  @include page;
+  flex-direction: column;
+}
+
+.nav{
+    width: 100%;
+}

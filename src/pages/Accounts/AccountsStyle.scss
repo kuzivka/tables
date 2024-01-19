@@ -1,0 +1,5 @@
+@use '../../assets/style/mixins.scss' as *;
+
+.accounts-page {
+  @include page;
+}

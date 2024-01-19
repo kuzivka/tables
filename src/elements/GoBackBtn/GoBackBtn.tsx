@@ -1,9 +1,6 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {};
-
-export const GoBackBtn = (props: Props) => {
+export const GoBackBtn = () => {
   const navigate = useNavigate();
   const handleClick = () => [navigate(-1)];
 

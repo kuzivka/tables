@@ -1,0 +1,5 @@
+@use '../../assets/style/mixins.scss' as *;
+
+.profiles-page {
+  @include page;
+}
