@@ -18,8 +18,8 @@ export const TABLES = {
     HEADER: 'Profiles Table',
     TITLES: {
       profileId: 'Profile ID',
-      marketplace: 'Country',
-      country: 'Marketplace',
+      marketplace: 'Marketplace',
+      country: 'Country',
     },
   },
   CAMPAIGNS: {

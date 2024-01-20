@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table } from '../../elements/Table/Table';
 
@@ -11,10 +11,31 @@ interface IAccount {
 
 export const AccountsTable: FC = () => {
   const [accountList, setAccountList] = useState<IAccount[]>([]);
+  const [filterStart, setFilterStart] = useState<string>();
+  const [filterEnd, setFilterEnd] = useState<string>();
   const navigate = useNavigate();
 
   const handleClick = (id: number) => {
     navigate(`/profile/${id}`, { state: { id: id } });
+  };
+
+  const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFilterStart(event.target.value);
+  };
+  const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFilterEnd(event.target.value);
+  };
+
+  const handleFilter = () => {
+    if (filterStart && filterEnd) {
+      setAccountList(
+        [...accountList].filter(
+          (account) =>
+            Date.parse(account.creationDate) > Date.parse(filterStart) &&
+            Date.parse(account.creationDate) < Date.parse(filterEnd)
+        )
+      );
+    }
   };
 
   useEffect(() => {
@@ -28,6 +49,29 @@ export const AccountsTable: FC = () => {
   }, []);
 
   return (
-    <Table tableName="ACCOUNTS" list={accountList} handleClick={handleClick} />
+    <>
+      <div className="filters-container">
+        <input
+          type="date"
+          name="start-date"
+          id="start-date"
+          onChange={handleStartDateChange}
+        />
+        <input
+          type="date"
+          name="end-date"
+          id="end-date"
+          onChange={handleEndDateChange}
+        />
+        <button onClick={handleFilter} disabled={!(filterEnd && filterStart)}>
+          Filter
+        </button>
+      </div>
+      <Table
+        tableName="ACCOUNTS"
+        list={accountList}
+        handleClick={handleClick}
+      />
+    </>
   );
 };

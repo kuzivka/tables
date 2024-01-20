@@ -8,7 +8,7 @@ interface IProps {
   handleClick?: (id: number) => void;
 }
 
-type TSortingOrder = 'asc' | 'desc' | undefined;
+type TSortingOrder = 'asc' | 'desc';
 
 export const Table = ({ handleClick, tableName, list }: IProps) => {
   const { HEADER, TITLES } = TABLES[tableName];
