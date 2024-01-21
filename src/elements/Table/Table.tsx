@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TABLES, TableNames } from '../../assets/constants/tables';
 import './TableStyles.scss';
 
@@ -14,14 +14,58 @@ export const Table = ({ handleClick, tableName, list }: IProps) => {
   const { HEADER, TITLES } = TABLES[tableName];
   const titles = Object.keys(TITLES);
   const selection = window.getSelection();
+  const SHOW_ON_PAGE = 2;
 
   const [recordsList, setRecordsList] = useState(list);
   const [sortingOption, setSortingOption] = useState<string>(titles[0]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortingOrder, setSortingOrder] = useState<TSortingOrder>('asc');
+
+  const amountOfPages = Math.ceil(list.length / SHOW_ON_PAGE);
+  const getRange = (start: number, end: number) => {
+    let length = end - start + 1;
+    return Array.from({ length }, (_, i) => i + start);
+  };
+  const pagesArray = getRange(1, amountOfPages);
+
+  const paginatedList = recordsList.slice(
+    (currentPage - 1) * SHOW_ON_PAGE,
+    currentPage * SHOW_ON_PAGE
+  );
 
   const onClick = (id: number) => {
     if (handleClick && !selection?.toString().length) {
       return handleClick(id);
+    }
+  };
+
+  const pageListRange = useMemo(() => {
+    const leftPage = Math.max(currentPage - 1, 1);
+    const rightPage = Math.min(currentPage + 1, amountOfPages);
+    const addLeftDots = leftPage > 2;
+    const addRightDots = rightPage < amountOfPages - 2;
+
+    if (4 >= amountOfPages) {
+      return pagesArray;
+    }
+    if (!addLeftDots && addRightDots) {
+      const leftRange = getRange(1, 4);
+      return [...leftRange, '...', amountOfPages];
+    }
+    if (addLeftDots && !addRightDots) {
+      const rightRange = getRange(amountOfPages - 4 + 1, amountOfPages);
+      return [1, '...', ...rightRange];
+    }
+    if (addLeftDots && addRightDots) {
+      const middleRange = getRange(leftPage, rightPage);
+      return [1, '...', ...middleRange, '...', amountOfPages];
+    }
+  }, [amountOfPages, currentPage, pagesArray]);
+
+  
+  const onPageChange = (page: number | string) => () => {
+    if (typeof page === 'number') {
+      setCurrentPage(page);
     }
   };
 
@@ -63,6 +107,7 @@ export const Table = ({ handleClick, tableName, list }: IProps) => {
 
   useEffect(() => {
     setRecordsList(list);
+    setCurrentPage(1);
   }, [list]);
 
   return (
@@ -81,7 +126,7 @@ export const Table = ({ handleClick, tableName, list }: IProps) => {
               </tr>
             </thead>
             <tbody>
-              {recordsList?.map((record) => (
+              {paginatedList?.map((record) => (
                 <tr
                   className={!!handleClick ? 'table-row' : ''}
                   key={record[titles[0]]}
@@ -96,6 +141,18 @@ export const Table = ({ handleClick, tableName, list }: IProps) => {
               ))}
             </tbody>
           </table>
+          <div className="pagination">
+            <span>Page:</span>
+            {pageListRange?.map((pageNumber: number | string) => (
+              <span
+                key={pageNumber}
+                className={currentPage === pageNumber ? 'active' : ''}
+                onClick={onPageChange(pageNumber)}
+              >
+                {pageNumber}
+              </span>
+            ))}
+          </div>
         </div>
       )}
     </>

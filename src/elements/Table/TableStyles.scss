@@ -41,3 +41,9 @@ tr:last-child td:first-child {
 tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
 }
+
+.active {
+  cursor: pointer;
+  color: #99bbff;
+  font-weight: 600;
+}

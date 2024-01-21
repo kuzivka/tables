@@ -15,8 +15,8 @@ export const CampaignsTable: FC = () => {
   const { id } = state;
   const [campaignsList, setCampaignsList] = useState<ICampaign[]>([]);
   const [filteredList, setFilteredList] = useState<ICampaign[]>(campaignsList);
-  const [min, setMin] = useState<string>();
-  const [max, setMax] = useState<string>();
+  const [min, setMin] = useState<string>('0');
+  const [max, setMax] = useState<string>('0');
 
   const handleMinChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMin(event.target.value.replace(/^0+(?=\d)/, '').replace(/^\D*$/, ''));
@@ -39,9 +39,11 @@ export const CampaignsTable: FC = () => {
     const fetchAccounts = async (): Promise<void> => {
       const res = await fetch('/data/campaigns.json');
       const list = await res.json();
-      setCampaignsList(
-        list.filter((campaign: ICampaign) => campaign.profileId === id)
+      const campaignsOfProfile = list.filter(
+        (campaign: ICampaign) => campaign.profileId === id
       );
+      setCampaignsList(campaignsOfProfile);
+      setFilteredList(campaignsOfProfile);
     };
 
     fetchAccounts();
@@ -61,7 +63,7 @@ export const CampaignsTable: FC = () => {
           value={min}
           onChange={handleMinChange}
         />
-        <label htmlFor="max-price">Min</label>
+        <label htmlFor="max-price">Max</label>
         <input
           type="number"
           name="max-price"
