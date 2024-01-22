@@ -11,10 +11,10 @@ interface IProps {
 type TSortingOrder = 'asc' | 'desc';
 
 export const Table = ({ handleClick, tableName, list }: IProps) => {
-  const { HEADER, TITLES } = TABLES[tableName];
+  const { TITLES } = TABLES[tableName];
   const titles = Object.keys(TITLES);
   const selection = window.getSelection();
-  const SHOW_ON_PAGE = 2;
+  const SHOW_ON_PAGE = 5;
 
   const [recordsList, setRecordsList] = useState(list);
   const [sortingOption, setSortingOption] = useState<string>(titles[0]);
@@ -62,7 +62,6 @@ export const Table = ({ handleClick, tableName, list }: IProps) => {
     }
   }, [amountOfPages, currentPage, pagesArray]);
 
-  
   const onPageChange = (page: number | string) => () => {
     if (typeof page === 'number') {
       setCurrentPage(page);
@@ -113,14 +112,20 @@ export const Table = ({ handleClick, tableName, list }: IProps) => {
   return (
     <>
       {list && (
-        <div>
-          <h2 className="header">{HEADER}</h2>
+        <div className="table-container">
           <table className="table">
             <thead className="table-header">
               <tr>
                 {Object.entries(TITLES).map(([key, value]) => (
                   <th key={key} onClick={() => handleSorting(key)}>
-                    {value}
+                    <span
+                      className={`material-symbols-outlined sort-icon ${
+                        key === sortingOption ? 'sorting ' + sortingOrder : ''
+                      }`}
+                    >
+                      arrow_downward
+                    </span>
+                    <span className="th-text">{value}</span>
                   </th>
                 ))}
               </tr>
@@ -146,7 +151,7 @@ export const Table = ({ handleClick, tableName, list }: IProps) => {
             {pageListRange?.map((pageNumber: number | string) => (
               <span
                 key={pageNumber}
-                className={currentPage === pageNumber ? 'active' : ''}
+                className={currentPage === pageNumber ? 'active page-number' : 'page-number'}
                 onClick={onPageChange(pageNumber)}
               >
                 {pageNumber}

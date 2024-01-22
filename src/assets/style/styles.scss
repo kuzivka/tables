@@ -1,6 +1,47 @@
+@use './variables' as *;
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: 'Roboto';
+  color: $grey;
+}
+
+button {
+  cursor: pointer;
+}
+
+.filters {
+  display: flex;
+  padding: 20px 0;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    .filter-btn {
+      outline: none;
+      border: none;
+      display: flex;
+      padding: 8px 12px;
+      border-radius: 4px;
+      background-color: $purple-lighter;
+
+      justify-content: center;
+      gap: 8px;
+      align-items: center;
+
+      color: $purple-dark;
+      font-weight: 600;
+
+      &:hover {
+        background-color: $purple-light;
+      }
+    }
+  }
 }

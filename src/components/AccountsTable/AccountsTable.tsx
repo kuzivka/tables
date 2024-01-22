@@ -49,29 +49,37 @@ export const AccountsTable: FC = () => {
   }, []);
 
   return (
-    <>
+    <div>
+      <h2 className="header">Accounts Table</h2>
       <div className="filters-container">
-        <input
-          type="date"
-          name="start-date"
-          id="start-date"
-          onChange={handleStartDateChange}
-        />
-        <input
-          type="date"
-          name="end-date"
-          id="end-date"
-          onChange={handleEndDateChange}
-        />
-        <button onClick={handleFilter} disabled={!(filterEnd && filterStart)}>
-          Filter
-        </button>
+        <h3 className='filters-header'>Filter By Date</h3>
+        <div className="filters">
+          <input
+            type="date"
+            name="start-date"
+            id="start-date"
+            onChange={handleStartDateChange}
+          />
+          <input
+            type="date"
+            name="end-date"
+            id="end-date"
+            onChange={handleEndDateChange}
+          />
+          <button
+            className="filter-btn"
+            onClick={handleFilter}
+            disabled={!(filterEnd && filterStart)}
+          >
+            Filter
+          </button>
+        </div>
       </div>
       <Table
         tableName="ACCOUNTS"
         list={accountList}
         handleClick={handleClick}
       />
-    </>
+    </div>
   );
 };

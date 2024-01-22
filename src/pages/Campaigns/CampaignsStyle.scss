@@ -1,10 +1,29 @@
 @use '../../assets/style/mixins.scss' as *;
+@use '../../assets/style/variables.scss' as *;
 
 .campaigns-page {
   @include page;
   flex-direction: column;
+  width: 100%;
 }
 
-.nav{
-    width: 100%;
+.nav {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.to-accounts {
+  text-decoration: none;
+  line-height: 40px;
+  color: $purple-dark;
+
+  background-color: $purple-lighter;
+  padding: 0 12px;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: $purple-light;
+  }
 }

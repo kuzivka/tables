@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Table } from '../../elements/Table/Table';
+import './ProfilesTableStyle.scss'
 
 interface IProfile {
   profileId: number;
@@ -61,20 +62,26 @@ export const ProfilesTable: FC = () => {
 
   return (
     <div>
-      <div className="filters">
-        {countries.map((country) => (
-          <div key={country}>
-            <input
-              value={country}
-              type="checkbox"
-              name={country}
-              id={country}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor={country}>{country}</label>
-          </div>
-        ))}
-        <button onClick={handleFilter}>Filter</button>
+      <h2 className="header">Profiles Table</h2>
+      <div className="filters-container">
+        <h3>Filter By Country</h3>
+        <div className="filters">
+          {countries.map((country) => (
+            <div key={country}>
+              <input
+                value={country}
+                type="checkbox"
+                name={country}
+                id={country}
+                onChange={handleCheckboxChange}
+              />
+              <label className='country-label' htmlFor={country}>{country}</label>
+            </div>
+          ))}
+          <button className="filter-btn" onClick={handleFilter}>
+            Filter
+          </button>
+        </div>
       </div>
       <Table
         tableName="PROFILES"

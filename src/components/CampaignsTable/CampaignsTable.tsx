@@ -51,29 +51,34 @@ export const CampaignsTable: FC = () => {
 
   return (
     <div>
-      <div className="filters">
+      <h2 className="header">Campaigns Table</h2>
+      <div className="filters-container">
         <h3>Cost Filter</h3>
-        <label htmlFor="min-price">Min</label>
-        <input
-          type="number"
-          name="min-price"
-          id="min-price"
-          min={0}
-          step={1}
-          value={min}
-          onChange={handleMinChange}
-        />
-        <label htmlFor="max-price">Max</label>
-        <input
-          type="number"
-          name="max-price"
-          id="max-price"
-          onChange={handleMaxChange}
-          min={0}
-          step={1}
-          value={max}
-        />
-        <button onClick={handleFilter}>Filter</button>
+        <div className="filters">
+          <label htmlFor="min-price">Min</label>
+          <input
+            type="number"
+            name="min-price"
+            id="min-price"
+            min={0}
+            step={1}
+            value={min}
+            onChange={handleMinChange}
+          />
+          <label htmlFor="max-price">Max</label>
+          <input
+            type="number"
+            name="max-price"
+            id="max-price"
+            onChange={handleMaxChange}
+            min={0}
+            step={1}
+            value={max}
+          />
+          <button className="filter-btn" onClick={handleFilter}>
+            Filter
+          </button>
+        </div>
       </div>
       <Table list={filteredList} tableName="CAMPAIGNS" />
     </div>

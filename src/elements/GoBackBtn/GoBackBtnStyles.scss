@@ -1,0 +1,25 @@
+@use '../../assets/style/variables.scss' as *;
+
+.go-back-btn {
+  outline: none;
+  border: none;
+  display: flex;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: $purple-lighter;
+
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+
+  color: $purple-dark;
+  font-weight: 600;
+
+  &:hover {
+    background-color: $purple-light;
+  }
+}
+
+.back-icon {
+  color: $purple-dark;
+}

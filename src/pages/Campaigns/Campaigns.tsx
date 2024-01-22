@@ -8,7 +8,7 @@ export const Campaigns = () => {
     <div className="campaigns-page">
       <div className="nav">
         <GoBackBtn />
-        <Link to="/">Back to Accounts</Link>
+        <Link className='to-accounts' to="/">Back to Accounts</Link>
       </div>
       <CampaignsTable />
     </div>
